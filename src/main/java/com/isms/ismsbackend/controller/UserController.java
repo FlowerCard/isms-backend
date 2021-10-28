@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
 @CrossOrigin
-public class Usercontroller {
+public class UserController {
 
     @Autowired
     private UserService userService;

@@ -21,6 +21,22 @@
     <include refid="Base_Column_List" />
     from machine_type
   </select>
+
+  <select id="existsName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from machine_type
+    where type_name = #{typeName}
+  </select>
+
+  <select id="selectByTypeId" resultMap="BaseResultMap">
+    SELECT `machine_type`.`type_name` FROM `machine_type`,`machine`
+    WHERE
+    `machine_type`.`type_id` = `machine`.`type_id`
+    AND
+    `machine_type`.`type_id`=#{typeId}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from machine_type
     where type_id = #{typeId,jdbcType=INTEGER}
@@ -64,6 +80,13 @@
     update machine_type
     set type_name = #{typeName,jdbcType=VARCHAR},
       is_delete = #{isDelete,jdbcType=INTEGER}
+    where type_id = #{typeId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateMachineType" parameterType="com.isms.ismsbackend.entity.MachineType">
+        update machine_type
+    set
+      is_delete = 1
     where type_id = #{typeId,jdbcType=INTEGER}
   </update>
 </mapper>

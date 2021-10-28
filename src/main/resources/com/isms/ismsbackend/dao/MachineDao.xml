@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.isms.ismsbackend.dao.MachineDao">
+  <resultMap id="BaseResultMap" type="com.isms.ismsbackend.entity.Machine">
+    <id column="m_id" jdbcType="INTEGER" property="mId" />
+    <result column="m_name" jdbcType="VARCHAR" property="mName" />
+    <result column="is_online" jdbcType="INTEGER" property="isOnline" />
+    <result column="is_enable" jdbcType="INTEGER" property="isEnable" />
+    <result column="work_id" jdbcType="INTEGER" property="workId" />
+    <result column="type_id" jdbcType="INTEGER" property="typeId" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    m_id, m_name, is_online, is_enable, work_id, type_id, is_delete
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from machine
+    where m_id = #{mId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from machine
+    where m_id = #{mId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="m_id" keyProperty="mId" parameterType="com.isms.ismsbackend.entity.Machine" useGeneratedKeys="true">
+    insert into machine (m_name, is_online, is_enable, 
+      work_id, type_id, is_delete
+      )
+    values (#{mName,jdbcType=VARCHAR}, #{isOnline,jdbcType=INTEGER}, #{isEnable,jdbcType=INTEGER}, 
+      #{workId,jdbcType=INTEGER}, #{typeId,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="m_id" keyProperty="mId" parameterType="com.isms.ismsbackend.entity.Machine" useGeneratedKeys="true">
+    insert into machine
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mName != null">
+        m_name,
+      </if>
+      <if test="isOnline != null">
+        is_online,
+      </if>
+      <if test="isEnable != null">
+        is_enable,
+      </if>
+      <if test="workId != null">
+        work_id,
+      </if>
+      <if test="typeId != null">
+        type_id,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mName != null">
+        #{mName,jdbcType=VARCHAR},
+      </if>
+      <if test="isOnline != null">
+        #{isOnline,jdbcType=INTEGER},
+      </if>
+      <if test="isEnable != null">
+        #{isEnable,jdbcType=INTEGER},
+      </if>
+      <if test="workId != null">
+        #{workId,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null">
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.isms.ismsbackend.entity.Machine">
+    update machine
+    <set>
+      <if test="mName != null">
+        m_name = #{mName,jdbcType=VARCHAR},
+      </if>
+      <if test="isOnline != null">
+        is_online = #{isOnline,jdbcType=INTEGER},
+      </if>
+      <if test="isEnable != null">
+        is_enable = #{isEnable,jdbcType=INTEGER},
+      </if>
+      <if test="workId != null">
+        work_id = #{workId,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null">
+        type_id = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+    </set>
+    where m_id = #{mId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.isms.ismsbackend.entity.Machine">
+    update machine
+    set m_name = #{mName,jdbcType=VARCHAR},
+      is_online = #{isOnline,jdbcType=INTEGER},
+      is_enable = #{isEnable,jdbcType=INTEGER},
+      work_id = #{workId,jdbcType=INTEGER},
+      type_id = #{typeId,jdbcType=INTEGER},
+      is_delete = #{isDelete,jdbcType=INTEGER}
+    where m_id = #{mId,jdbcType=INTEGER}
+  </update>
+</mapper>
