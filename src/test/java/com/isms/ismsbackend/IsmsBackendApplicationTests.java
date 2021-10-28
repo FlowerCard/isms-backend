@@ -7,6 +7,8 @@ import com.isms.ismsbackend.entity.City;
 import com.isms.ismsbackend.entity.ResultVO;
 import com.isms.ismsbackend.entity.Worksite;
 import com.isms.ismsbackend.service.CityService;
+import com.isms.ismsbackend.dao.UserDao;
+import com.isms.ismsbackend.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,8 +25,13 @@ class IsmsBackendApplicationTests {
     @Autowired
     private CityService cityService;
 
+    @Autowired
+    private UserDao userDao;
+
     @Test
     void contextLoads() {
+        User user = userDao.selectByPrimaryKey(1);
+        System.out.println(user);
     }
     
     @Test
