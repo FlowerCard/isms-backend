@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.isms.ismsbackend.dao.WorksiteDao">
+  <resultMap id="BaseResultMap" type="com.isms.ismsbackend.entity.Worksite">
+    <id column="work_id" jdbcType="INTEGER" property="workId" />
+    <result column="work_name" jdbcType="VARCHAR" property="workName" />
+    <result column="work_addr" jdbcType="VARCHAR" property="workAddr" />
+    <result column="city_id" jdbcType="INTEGER" property="cityId" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    <result column="u_id" jdbcType="INTEGER" property="uId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    work_id, work_name, work_addr, city_id, is_delete, u_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from worksite
+    where work_id = #{workId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from worksite
+    where work_id = #{workId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="work_id" keyProperty="workId" parameterType="com.isms.ismsbackend.entity.Worksite" useGeneratedKeys="true">
+    insert into worksite (work_name, work_addr, city_id, 
+      is_delete, u_id)
+    values (#{workName,jdbcType=VARCHAR}, #{workAddr,jdbcType=VARCHAR}, #{cityId,jdbcType=INTEGER}, 
+      #{isDelete,jdbcType=INTEGER}, #{uId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="work_id" keyProperty="workId" parameterType="com.isms.ismsbackend.entity.Worksite" useGeneratedKeys="true">
+    insert into worksite
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="workName != null">
+        work_name,
+      </if>
+      <if test="workAddr != null">
+        work_addr,
+      </if>
+      <if test="cityId != null">
+        city_id,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="uId != null">
+        u_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="workName != null">
+        #{workName,jdbcType=VARCHAR},
+      </if>
+      <if test="workAddr != null">
+        #{workAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null">
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="uId != null">
+        #{uId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.isms.ismsbackend.entity.Worksite">
+    update worksite
+    <set>
+      <if test="workName != null">
+        work_name = #{workName,jdbcType=VARCHAR},
+      </if>
+      <if test="workAddr != null">
+        work_addr = #{workAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null">
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="uId != null">
+        u_id = #{uId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where work_id = #{workId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.isms.ismsbackend.entity.Worksite">
+    update worksite
+    set work_name = #{workName,jdbcType=VARCHAR},
+      work_addr = #{workAddr,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=INTEGER},
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      u_id = #{uId,jdbcType=INTEGER}
+    where work_id = #{workId,jdbcType=INTEGER}
+  </update>
+</mapper>
