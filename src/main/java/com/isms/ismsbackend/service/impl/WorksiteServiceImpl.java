@@ -1,0 +1,98 @@
+package com.isms.ismsbackend.service.impl;
+
+import com.github.pagehelper.PageHelper;
+import com.isms.ismsbackend.constant.MessageConstant;
+import com.isms.ismsbackend.constant.ResponseCode;
+import com.isms.ismsbackend.dao.WorksiteDao;
+import com.isms.ismsbackend.entity.ResultVO;
+import com.isms.ismsbackend.entity.Worksite;
+import com.isms.ismsbackend.service.WorksiteService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * @author HuaPai
+ * @email HuaPai@odcn.live
+ * Created on 2021/10/28.
+ * 工地业务层实现
+ */
+@Service("worksiteService")
+public class WorksiteServiceImpl implements WorksiteService {
+    
+    @Autowired
+    private WorksiteDao worksiteDao;
+    
+    private ResultVO resultVO = null;
+    
+    /**
+     * 根据用户ID分页查询
+     *
+     * @param page  当前页
+     * @param limit 页大小
+     * @param uid   用户ID
+     * @return 封装的返回数据
+     */
+    @Override
+    public ResultVO queryAll(Integer uid, Integer page, Integer limit) {
+        resultVO = new ResultVO();
+        
+        if (page == 0) {
+            page = 1;
+        }
+
+        if (limit == 0) {
+            limit = 10;
+        }
+
+        PageHelper.startPage(page,limit);
+        List<Worksite> worksites = worksiteDao.selectByUId(uid);
+        if (worksites.size() == 0) {
+            resultVO.setCode(ResponseCode.FAIL);
+            resultVO.setMessage(MessageConstant.QUERY_FAIL);
+            resultVO.setData(null);
+            return resultVO;
+        }
+        
+        resultVO.setCode(ResponseCode.SUCCESS);
+        resultVO.setMessage(MessageConstant.QUERY_SUCCESS);
+        resultVO.setData(worksites);
+        return resultVO;
+    }
+
+    /**
+     * 根据工地ID查询
+     *
+     * @param id 工地ID
+     * @return 封装的返回数据
+     */
+    @Override
+    public ResultVO queryWorksiteById(Integer id) {
+        resultVO = new ResultVO();
+        Worksite worksite = worksiteDao.selectByPrimaryKey(id);
+        if (worksite == null) {
+            resultVO.setCode(ResponseCode.FAIL);
+            resultVO.setMessage(MessageConstant.QUERY_FAIL);
+            resultVO.setData(null);
+            return resultVO;
+        }
+        
+        resultVO.setCode(ResponseCode.SUCCESS);
+        resultVO.setMessage(MessageConstant.QUERY_SUCCESS);
+        resultVO.setData(worksite);
+        return resultVO;
+    }
+
+    /**
+     * 名字是否存在
+     *
+     * @param workName 工地名称
+     * @return 是否存在
+     */
+    @Override
+    public Boolean existsName(String workName) {
+        Worksite worksite = worksiteDao.selectByWorkName(workName);
+        return worksite == null;
+    }
+}
