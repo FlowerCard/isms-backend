@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    username: huapai
+    password: huapaiPwd3.
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.31.161.50:3306/ISMS
+    type: com.alibaba.druid.pool.DruidDataSource
+
+logging:
+  level: 
+    com.isms.ismsbackend.dao: debug
