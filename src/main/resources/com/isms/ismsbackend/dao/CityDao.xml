@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.isms.ismsbackend.dao.CityDao">
+  <resultMap id="BaseResultMap" type="com.isms.ismsbackend.entity.City">
+    <id column="city_id" jdbcType="INTEGER" property="cityId" />
+    <result column="city_name" jdbcType="VARCHAR" property="cityName" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    city_id, city_name, is_delete
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from city
+    where city_id = #{cityId,jdbcType=INTEGER}
+    and is_delete != 1
+  </select>
+  <select id="selectByCityName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from city
+    where city_name = #{cityName,jdbcType=VARCHAR}
+    and is_delete != 1
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from city
+    where is_delete != 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from city
+    where city_id = #{cityId,jdbcType=INTEGER}
+  </delete>
+  <update id="setDelete" parameterType="integer">
+    update city set is_delete = 1 where city_id = #{cityId,jdbcType=INTEGER}
+  </update>
+  <insert id="insert" keyColumn="city_id" keyProperty="cityId" parameterType="com.isms.ismsbackend.entity.City" useGeneratedKeys="true">
+    insert into city (city_name, is_delete)
+    values (#{cityName,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="city_id" keyProperty="cityId" parameterType="com.isms.ismsbackend.entity.City" useGeneratedKeys="true">
+    insert into city
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cityName != null">
+        city_name,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cityName != null">
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.isms.ismsbackend.entity.City">
+    update city
+    <set>
+      <if test="cityName != null">
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+    </set>
+    where city_id = #{cityId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.isms.ismsbackend.entity.City">
+    update city
+    set city_name = #{cityName,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=INTEGER}
+    where city_id = #{cityId,jdbcType=INTEGER}
+  </update>
+</mapper>

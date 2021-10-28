@@ -9,3 +9,6 @@ spring:
 logging:
   level: 
     com.isms.ismsbackend.dao: debug
+
+server:
+  port: 8081
