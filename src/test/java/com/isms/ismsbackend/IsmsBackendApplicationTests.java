@@ -1,5 +1,7 @@
 package com.isms.ismsbackend;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.isms.ismsbackend.dao.CityDao;
 import com.isms.ismsbackend.dao.MachineDao;
@@ -55,6 +57,14 @@ class IsmsBackendApplicationTests {
         cityService.modifyCity(city);
         ResultVO resultVO = cityService.queryById(city.getCityId());
         System.out.println(resultVO.getData());
+    }
+    
+    @Test
+    void getWorksite() {
+        PageHelper.startPage(1,3);
+        List<Worksite> worksites = worksiteDao.selectByUId(2);
+        PageInfo pageInfo = new PageInfo(worksites);
+        System.out.println("pageInfo = " + pageInfo);
     }
 
     @Test

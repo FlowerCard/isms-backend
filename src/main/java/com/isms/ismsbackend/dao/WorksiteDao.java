@@ -3,6 +3,8 @@ package com.isms.ismsbackend.dao;
 import com.isms.ismsbackend.entity.Worksite;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author HuaPai
  * @email HuaPai@odcn.live
@@ -18,6 +20,10 @@ public interface WorksiteDao {
     int insertSelective(Worksite record);
 
     Worksite selectByPrimaryKey(Integer workId);
+    
+    List<Worksite> selectByUId(Integer uid);
+    
+    Worksite selectByWorkName(String username);
 
     int updateByPrimaryKeySelective(Worksite record);
 

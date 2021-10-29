@@ -32,6 +32,15 @@ public class CityController {
     }
 
     /**
+     * 不分页获取地区列表
+     * @return 封装的返回数据
+     */
+    @GetMapping("/cities")
+    public ResultVO getCityList() {
+        return cityService.queryAllCities();
+    }
+
+    /**
      * 通过ID获取地区
      * @param cityId 地区ID
      * @return 封装的返回数据
