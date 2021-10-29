@@ -3,6 +3,8 @@ package com.isms.ismsbackend.service;
 import com.github.pagehelper.PageInfo;
 import com.isms.ismsbackend.entity.MachineType;
 
+import java.util.List;
+
 /**
  * @Author lzj
  * @Date 2021/10/28
@@ -57,4 +59,10 @@ public interface MachineTypeService {
      * @return
      */
     Integer addMachineType(MachineType machineType);
+
+    /**
+     * 查询设备类型名称
+     * @return
+     */
+    List<MachineType> findMachineTypeNames();
 }

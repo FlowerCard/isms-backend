@@ -9,16 +9,58 @@
     <result column="work_id" jdbcType="INTEGER" property="workId" />
     <result column="type_id" jdbcType="INTEGER" property="typeId" />
     <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    <result column="create_date" property="createDate"/>
+    <result column="update_date" property="updateDate"/>
+
+    <!--设备类型-->
+    <association property="machineType" javaType="com.isms.ismsbackend.entity.MachineType">
+      <id column="type_id" jdbcType="INTEGER" property="typeId" />
+      <result column="type_name" jdbcType="VARCHAR" property="typeName" />
+      <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    </association>
+
+    <!--区域-->
+    <association property="worksite" javaType="com.isms.ismsbackend.entity.Worksite">
+      <id column="work_id" jdbcType="INTEGER" property="workId" />
+      <result column="work_name" jdbcType="VARCHAR" property="workName" />
+      <result column="work_addr" jdbcType="VARCHAR" property="workAddr" />
+      <result column="city_id" jdbcType="INTEGER" property="cityId" />
+      <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+      <result column="u_id" jdbcType="INTEGER" property="uId" />
+    </association>
   </resultMap>
+
   <sql id="Base_Column_List">
     m_id, m_name, is_online, is_enable, work_id, type_id, is_delete
   </sql>
+
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT
+	`machine`.`m_id`,`machine`.`m_name`,`machine`.`is_online`,
+	`machine`.`is_enable`,`machine`.`is_delete`,
+	`machine`.`create_date`,`machine`.`update_date`,
+	`machine`.type_id,`machine`.work_id,
+	`machine_type`.`type_name`,`worksite`.`work_name`
+   FROM
+   `machine`,`machine_type`,`worksite`
+   WHERE
+   `machine`.`type_id` = `machine_type`.`type_id`
+   AND
+   `machine`.`work_id` = `worksite`.`work_id`
+   AND
+   `machine`.`is_delete` = '0'
+   AND
+   `worksite`.`u_id` = #{uid}
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from machine
     where m_id = #{mId,jdbcType=INTEGER}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from machine
     where m_id = #{mId,jdbcType=INTEGER}

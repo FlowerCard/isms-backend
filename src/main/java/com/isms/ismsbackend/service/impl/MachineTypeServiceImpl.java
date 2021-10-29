@@ -67,4 +67,9 @@ public class MachineTypeServiceImpl implements MachineTypeService {
     public Integer addMachineType(MachineType machineType) {
         return  machineTypeDao.insertSelective(machineType);
     }
+
+    @Override
+    public List<MachineType> findMachineTypeNames() {
+        return machineTypeDao.selectAll();
+    }
 }

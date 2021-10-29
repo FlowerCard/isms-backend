@@ -2,16 +2,16 @@ package com.isms.ismsbackend;
 
 import com.github.pagehelper.PageInfo;
 import com.isms.ismsbackend.dao.CityDao;
+import com.isms.ismsbackend.dao.MachineDao;
 import com.isms.ismsbackend.dao.WorksiteDao;
-import com.isms.ismsbackend.entity.City;
-import com.isms.ismsbackend.entity.ResultVO;
-import com.isms.ismsbackend.entity.Worksite;
+import com.isms.ismsbackend.entity.*;
 import com.isms.ismsbackend.service.CityService;
 import com.isms.ismsbackend.dao.UserDao;
-import com.isms.ismsbackend.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 @SpringBootTest
 class IsmsBackendApplicationTests {
@@ -27,6 +27,9 @@ class IsmsBackendApplicationTests {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private MachineDao machineDao;
 
     @Test
     void contextLoads() {
@@ -52,6 +55,12 @@ class IsmsBackendApplicationTests {
         cityService.modifyCity(city);
         ResultVO resultVO = cityService.queryById(city.getCityId());
         System.out.println(resultVO.getData());
+    }
+
+    @Test
+    public void Machine(){
+         machineDao.selectAll(2).forEach(System.out::println);
+
     }
 
 }
