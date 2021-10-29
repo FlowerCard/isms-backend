@@ -1,6 +1,7 @@
 package com.isms.ismsbackend.dao;
 
 import com.isms.ismsbackend.entity.City;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public interface CityDao {
     
     City selectByCityName(String cityName);
     
-    List<City> selectAll();
+    List<City> selectAll(@Param("searchName") String searchName,@Param("cityId") Integer cityId);
 
     int updateByPrimaryKeySelective(City record);
 

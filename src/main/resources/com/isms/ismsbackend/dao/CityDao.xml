@@ -28,6 +28,10 @@
     <include refid="Base_Column_List" />
     from city
     where is_delete != 1
+    and city_name like concat('%',#{searchName},'%')
+    <if test="cityId != null">
+      and city_id = #{cityId}
+    </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from city

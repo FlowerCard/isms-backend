@@ -53,6 +53,10 @@
    AND
    `worksite`.`u_id` = #{uid}
   </select>
+  
+  <select id="selectByWorkId" resultType="int">
+    select count(1) from machine where work_id = #{workId}
+  </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 

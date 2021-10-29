@@ -39,16 +39,42 @@
     where worksite.city_id = c.city_id
         and worksite.u_id = #{u_id,jdbcType=INTEGER} and worksite.is_delete != 1
   </select>
+  <select id="selectBySearch" resultMap="BaseResultMap">
+    select
+      worksite.work_id work_id,
+      worksite.work_name work_name,
+      worksite.work_addr work_addr,
+      worksite.city_id city_id,
+      worksite.u_id u_id,
+      worksite.create_time create_time,
+      worksite.update_time update_time,
+      worksite.is_delete is_delete,
+      c.city_name
+    from worksite , city c
+    where worksite.city_id = c.city_id
+      and worksite.u_id = #{u_id} 
+      and worksite.is_delete != 1
+      and worksite.work_name like concat('%',#{work_name},'%')
+    <if test="city_id != null">
+      and worksite.city_id = #{city_id}
+    </if>
+  </select>
   <select id="selectByWorkName" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from worksite
     where work_name = #{workName,jdbcType=VARCHAR} and is_delete != 1
   </select>
+  <select id="selectByCityId" parameterType="integer" resultType="int">
+    select count(1) from worksite where city_id = #{cityId}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from worksite
     where work_id = #{workId,jdbcType=INTEGER}
   </delete>
+  <update id="setDelete"  parameterType="integer">
+    update worksite set is_delete = 1 where work_id = #{workId}
+  </update>
   <insert id="insert" keyColumn="work_id" keyProperty="workId" parameterType="com.isms.ismsbackend.entity.Worksite" useGeneratedKeys="true">
     insert into worksite (work_name, work_addr, city_id, u_id, create_time, update_time, is_delete)
     values (#{workName,jdbcType=VARCHAR}, #{workAddr,jdbcType=VARCHAR}, #{cityId,jdbcType=INTEGER}, 
