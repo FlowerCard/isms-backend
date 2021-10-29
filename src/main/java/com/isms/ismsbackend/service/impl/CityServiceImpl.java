@@ -69,6 +69,28 @@ public class CityServiceImpl implements CityService {
     }
 
     /**
+     * 不分页查询所有地区
+     *
+     * @return 封装的返回数据
+     */
+    @Override
+    public ResultVO queryAllCities() {
+        resultVO = new ResultVO();
+        List<City> cities = cityDao.selectAll();
+        if (cities.size() == 0) {
+            resultVO.setCode(ResponseCode.FAIL);
+            resultVO.setMessage(MessageConstant.QUERY_FAIL);
+            resultVO.setData(null);
+            return resultVO;
+        }
+        
+        resultVO.setCode(ResponseCode.SUCCESS);
+        resultVO.setMessage(MessageConstant.QUERY_SUCCESS);
+        resultVO.setData(cities);
+        return resultVO;
+    }
+
+    /**
      * 根据地区ID查询
      *
      * @param cityId 地区ID

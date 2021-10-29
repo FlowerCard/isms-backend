@@ -1,6 +1,7 @@
 package com.isms.ismsbackend.service;
 
 import com.isms.ismsbackend.entity.ResultVO;
+import com.isms.ismsbackend.entity.Worksite;
 
 /**
  * @author HuaPai
@@ -32,5 +33,19 @@ public interface WorksiteService {
      * @return 是否存在
      */
     public Boolean existsName(String workName);
+
+    /**
+     * 新增工地
+     * @param worksite 工地对象
+     * @return 封装的返回数据
+     */
+    public ResultVO addWorksite(Worksite worksite);
+
+    /**
+     * 修改工地
+     * @param worksite 工地对象
+     * @return 封装的返回数据
+     */
+    public ResultVO modifyWorksite(Worksite worksite);
     
 }

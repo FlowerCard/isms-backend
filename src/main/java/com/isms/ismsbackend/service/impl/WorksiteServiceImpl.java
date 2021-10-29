@@ -1,6 +1,7 @@
 package com.isms.ismsbackend.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.isms.ismsbackend.constant.MessageConstant;
 import com.isms.ismsbackend.constant.ResponseCode;
 import com.isms.ismsbackend.dao.WorksiteDao;
@@ -10,6 +11,7 @@ import com.isms.ismsbackend.service.WorksiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -54,10 +56,11 @@ public class WorksiteServiceImpl implements WorksiteService {
             resultVO.setData(null);
             return resultVO;
         }
-        
+
+        PageInfo pageInfo = new PageInfo(worksites);
         resultVO.setCode(ResponseCode.SUCCESS);
         resultVO.setMessage(MessageConstant.QUERY_SUCCESS);
-        resultVO.setData(worksites);
+        resultVO.setData(pageInfo);
         return resultVO;
     }
 
@@ -94,5 +97,53 @@ public class WorksiteServiceImpl implements WorksiteService {
     public Boolean existsName(String workName) {
         Worksite worksite = worksiteDao.selectByWorkName(workName);
         return worksite == null;
+    }
+
+    /**
+     * 新增工地
+     *
+     * @param worksite 工地对象
+     * @return 封装的返回数据
+     */
+    @Override
+    public ResultVO addWorksite(Worksite worksite) {
+        worksite.setCreateTime(new Date());
+        int row = worksiteDao.insertSelective(worksite);
+        resultVO = new ResultVO();
+        if (row == 0) {
+            resultVO.setCode(ResponseCode.FAIL);
+            resultVO.setMessage(MessageConstant.ADD_FAIL);
+            resultVO.setData(false);
+            return resultVO;
+        }
+        
+        resultVO.setCode(ResponseCode.SUCCESS);
+        resultVO.setMessage(MessageConstant.ADD_SUCCESS);
+        resultVO.setData(true);
+        return resultVO;
+    }
+
+    /**
+     * 修改工地
+     *
+     * @param worksite 工地对象
+     * @return 封装的返回数据
+     */
+    @Override
+    public ResultVO modifyWorksite(Worksite worksite) {
+        resultVO = new ResultVO();
+        worksite.setUpdateTime(new Date());
+        int row = worksiteDao.updateByPrimaryKeySelective(worksite);
+        if (row == 0) {
+            resultVO.setCode(ResponseCode.FAIL);
+            resultVO.setMessage(MessageConstant.UPDATE_FAIL);
+            resultVO.setData(false);
+            return resultVO;
+        }
+        
+        resultVO.setCode(ResponseCode.SUCCESS);
+        resultVO.setMessage(MessageConstant.UPDATE_SUCCESS);
+        resultVO.setData(true);
+        return resultVO;
     }
 }

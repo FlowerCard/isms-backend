@@ -20,6 +20,12 @@ public interface CityService {
     public ResultVO queryAllCities(Integer page, Integer limit);
 
     /**
+     * 不分页查询所有地区
+     * @return 封装的返回数据
+     */
+    public ResultVO queryAllCities();
+
+    /**
      * 根据地区ID查询
      * @param cityId 地区ID
      * @return 封装的地区数据

@@ -61,7 +61,7 @@ class IsmsBackendApplicationTests {
     @Test
     void getWorksite() {
         PageHelper.startPage(1,3);
-        List<Worksite> worksites = worksiteDao.selectByUId(1);
+        List<Worksite> worksites = worksiteDao.selectByUId(2);
         PageInfo pageInfo = new PageInfo(worksites);
         System.out.println("pageInfo = " + pageInfo);
     }

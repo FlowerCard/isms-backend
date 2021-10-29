@@ -6,11 +6,17 @@
     <result column="work_name" jdbcType="VARCHAR" property="workName" />
     <result column="work_addr" jdbcType="VARCHAR" property="workAddr" />
     <result column="city_id" jdbcType="INTEGER" property="cityId" />
-    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
     <result column="u_id" jdbcType="INTEGER" property="uId" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="update_time" javaType="DATE" property="updateTime" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    <association property="city" javaType="com.isms.ismsbackend.entity.City">
+      <id column="city_id" jdbcType="INTEGER" property="cityId" />
+      <result column="city_name" jdbcType="VARCHAR" property="cityName" />
+    </association>
   </resultMap>
   <sql id="Base_Column_List">
-    work_id, work_name, work_addr, city_id, is_delete, u_id
+    work_id, work_name, work_addr, city_id, u_id, create_time, is_delete
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -20,9 +26,18 @@
   </select>
   <select id="selectByUId" parameterType="integer" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
-    from worksite
-    where u_id = #{u_id,jdbcType=INTEGER} and is_delete != 1
+      worksite.work_id work_id,
+      worksite.work_name work_name,
+      worksite.work_addr work_addr,
+      worksite.city_id city_id,
+      worksite.u_id u_id,
+      worksite.create_time create_time,
+      worksite.update_time update_time,
+      worksite.is_delete is_delete,
+      c.city_name
+    from worksite , city c
+    where worksite.city_id = c.city_id
+        and worksite.u_id = #{u_id,jdbcType=INTEGER} and worksite.is_delete != 1
   </select>
   <select id="selectByWorkName" resultMap="BaseResultMap">
     select
@@ -35,10 +50,9 @@
     where work_id = #{workId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="work_id" keyProperty="workId" parameterType="com.isms.ismsbackend.entity.Worksite" useGeneratedKeys="true">
-    insert into worksite (work_name, work_addr, city_id, 
-      is_delete, u_id)
+    insert into worksite (work_name, work_addr, city_id, u_id, create_time, is_delete)
     values (#{workName,jdbcType=VARCHAR}, #{workAddr,jdbcType=VARCHAR}, #{cityId,jdbcType=INTEGER}, 
-      #{isDelete,jdbcType=INTEGER}, #{uId,jdbcType=INTEGER})
+      #{uId,jdbcType=INTEGER}, #{createTime,jdbcType=DATE}, #{isDelete,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" keyColumn="work_id" keyProperty="workId" parameterType="com.isms.ismsbackend.entity.Worksite" useGeneratedKeys="true">
     insert into worksite
@@ -52,11 +66,14 @@
       <if test="cityId != null">
         city_id,
       </if>
-      <if test="isDelete != null">
-        is_delete,
-      </if>
       <if test="uId != null">
         u_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -69,11 +86,14 @@
       <if test="cityId != null">
         #{cityId,jdbcType=INTEGER},
       </if>
-      <if test="isDelete != null">
-        #{isDelete,jdbcType=INTEGER},
-      </if>
       <if test="uId != null">
         #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -89,11 +109,14 @@
       <if test="cityId != null">
         city_id = #{cityId,jdbcType=INTEGER},
       </if>
-      <if test="isDelete != null">
-        is_delete = #{isDelete,jdbcType=INTEGER},
-      </if>
       <if test="uId != null">
         u_id = #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=INTEGER},
       </if>
     </set>
     where work_id = #{workId,jdbcType=INTEGER}
@@ -103,8 +126,9 @@
     set work_name = #{workName,jdbcType=VARCHAR},
       work_addr = #{workAddr,jdbcType=VARCHAR},
       city_id = #{cityId,jdbcType=INTEGER},
-      is_delete = #{isDelete,jdbcType=INTEGER},
-      u_id = #{uId,jdbcType=INTEGER}
+      u_id = #{uId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=DATE},
+      is_delete = #{isDelete,jdbcType=INTEGER}
     where work_id = #{workId,jdbcType=INTEGER}
   </update>
 </mapper>

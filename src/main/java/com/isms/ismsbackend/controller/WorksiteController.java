@@ -1,12 +1,12 @@
 package com.isms.ismsbackend.controller;
 
+import com.isms.ismsbackend.constant.MessageConstant;
+import com.isms.ismsbackend.constant.ResponseCode;
 import com.isms.ismsbackend.entity.ResultVO;
+import com.isms.ismsbackend.entity.Worksite;
 import com.isms.ismsbackend.service.WorksiteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author HuaPai
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/worksite")
+@CrossOrigin
 public class WorksiteController {
     
     @Autowired
@@ -30,6 +31,35 @@ public class WorksiteController {
     @GetMapping("/{id}")
     public ResultVO getWorksiteById(@PathVariable Integer id) {
         return worksiteService.queryWorksiteById(id);
+    }
+    
+    @GetMapping("/worksite/{worksiteName}")
+    public Boolean existsName(@PathVariable String worksiteName) {
+        return worksiteService.existsName(worksiteName);
+    }
+    
+    @PostMapping("/worksite")
+    public ResultVO addWorksite(@RequestBody Worksite worksite) {
+        resultVO = new ResultVO();
+        if (worksite.getWorkName() == null || worksite.getWorkAddr() == null || worksite.getCityId() == null) {
+            resultVO.setCode(ResponseCode.FAIL);
+            resultVO.setMessage(MessageConstant.ADD_FAIL);
+            resultVO.setData(null);
+            return resultVO;
+        }
+        return worksiteService.addWorksite(worksite);
+    }
+    
+    @PutMapping("/worksite")
+    public ResultVO modifyWorksite(@RequestBody Worksite worksite) {
+        resultVO = new ResultVO();
+        if (worksite.getWorkName() == null || worksite.getWorkAddr() == null || worksite.getCityId() == null) {
+            resultVO.setCode(ResponseCode.FAIL);
+            resultVO.setMessage(MessageConstant.ADD_FAIL);
+            resultVO.setData(null);
+            return resultVO;
+        }
+        return worksiteService.modifyWorksite(worksite);
     }
     
 }
