@@ -16,6 +16,17 @@ public interface MachineTypeDao {
 
     List<MachineType> selectAll();
 
+    MachineType existsName(String typeName);
+
+    MachineType selectByTypeId(Integer typeId);
+
+    /**
+     * 逻辑删除
+     * @param typeId
+     * @return
+     */
+    Integer updateMachineType(Integer typeId);
+
     int updateByPrimaryKeySelective(MachineType record);
 
     int updateByPrimaryKey(MachineType record);

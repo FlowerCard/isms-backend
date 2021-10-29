@@ -25,5 +25,7 @@ public class MachineType implements Serializable {
      */
     private Integer isDelete;
 
+
+
     private static final long serialVersionUID = 1L;
 }

@@ -29,4 +29,47 @@ public class MachineTypeServiceImpl implements MachineTypeService {
         PageInfo<MachineType> pageInfo = new PageInfo<>(typeList);
         return pageInfo;
     }
+
+    @Override
+    public MachineType findById(Integer typeId) {
+        MachineType machineType = machineTypeDao.selectByPrimaryKey(typeId);
+        return machineType;
+    }
+
+    @Override
+    public MachineType existsName(String typeName) {
+        MachineType machineType = machineTypeDao.existsName(typeName);
+        return machineType;
+    }
+
+    @Override
+    public Integer modifyMachineType(MachineType machineType) {
+        return machineTypeDao.updateByPrimaryKeySelective(machineType);
+    }
+
+    @Override
+    public MachineType findByTypeId(Integer typeId) {
+        MachineType machineType = machineTypeDao.selectByTypeId(typeId);
+        return machineType;
+    }
+
+    @Override
+    public Integer updateMachineType(Integer typeId) {
+        MachineType machineType = machineTypeDao.selectByTypeId(typeId);
+        //查到相关数据 执行返回0 逻辑删除失败
+        if (machineType != null) {
+            return 0;
+        }
+        return machineTypeDao.updateMachineType(typeId);
+    }
+
+    @Override
+    public Integer addMachineType(MachineType machineType) {
+        return  machineTypeDao.insertSelective(machineType);
+    }
+
+    @Override
+    public List<MachineType> findMachineTypeNames() {
+        return machineTypeDao.selectAll();
+    }
 }
