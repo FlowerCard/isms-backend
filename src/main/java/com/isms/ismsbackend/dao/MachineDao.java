@@ -1,6 +1,7 @@
 package com.isms.ismsbackend.dao;
 
 import com.isms.ismsbackend.entity.Machine;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,7 +21,22 @@ public interface MachineDao {
      * @param uId
      * @return
      */
-    List<Machine> selectAll(Integer uId);
+    List<Machine> selectAll(@Param("uId") Integer uId,@Param("fuzzy") String fuzzy,
+                            @Param("typeId") Integer typeId,@Param("workId") Integer workId);
+
+    /**
+     * 根据设备名查询 用于校验设备名是否存在
+     * @param mName
+     * @return
+     */
+    Machine selectMachineName(String mName);
+
+    /**
+     * 逻辑删除
+     * @param mId
+     * @return
+     */
+    int updateMachine(Integer mId);
 
     int updateByPrimaryKeySelective(Machine record);
 

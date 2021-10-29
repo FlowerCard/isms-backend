@@ -23,9 +23,9 @@ public class MachineTypeServiceImpl implements MachineTypeService {
     private MachineTypeDao machineTypeDao;
 
     @Override
-    public PageInfo findAll(Integer page,Integer limit) {
+    public PageInfo findAll(Integer page,Integer limit,Integer typeId) {
         PageHelper.startPage(page,limit);
-        List<MachineType> typeList = machineTypeDao.selectAll();
+        List<MachineType> typeList = machineTypeDao.selectAll(typeId);
         PageInfo<MachineType> pageInfo = new PageInfo<>(typeList);
         return pageInfo;
     }
@@ -70,6 +70,6 @@ public class MachineTypeServiceImpl implements MachineTypeService {
 
     @Override
     public List<MachineType> findMachineTypeNames() {
-        return machineTypeDao.selectAll();
+        return machineTypeDao.selectAlls();
     }
 }

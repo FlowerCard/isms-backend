@@ -22,8 +22,9 @@ public class MachineTypeController {
     private ResultVO resultVO = null;
 
     @GetMapping("/findAll/{page}/{limit}")
-    public ResultVO findAll(@PathVariable Integer page, @PathVariable Integer limit){
-        PageInfo pageInfo = machineTypeService.findAll(page, limit);
+    public ResultVO findAll(@PathVariable Integer page, @PathVariable Integer limit,
+                            Integer typeId){
+        PageInfo pageInfo = machineTypeService.findAll(page, limit,typeId);
         resultVO = new ResultVO();
         resultVO.setCode(1);
         resultVO.setMessage("查询类型成功！");

@@ -1,6 +1,7 @@
 package com.isms.ismsbackend.dao;
 
 import com.isms.ismsbackend.entity.MachineType;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,7 +15,8 @@ public interface MachineTypeDao {
 
     MachineType selectByPrimaryKey(Integer typeId);
 
-    List<MachineType> selectAll();
+    List<MachineType> selectAll(@Param("typeId") Integer typeId);
+    List<MachineType> selectAlls();
 
     MachineType existsName(String typeName);
 

@@ -24,6 +24,11 @@
     <include refid="Base_Column_List" />
     from user
     where is_delete = 0
+    AND username  LIKE concat('%',#{fuzzy},'%')
+    <if test="uid != null">
+      AND u_id = #{uid,jdbcType=INTEGER}
+    </if>
+
   </select>
 
   <select id="selectUserByName" resultMap="BaseResultMap">

@@ -51,7 +51,15 @@
    AND
    `machine`.`is_delete` = '0'
    AND
-   `worksite`.`u_id` = #{uid}
+   `worksite`.`u_id` = #{uId}
+    AND
+    m_name LIKE concat('%',#{fuzzy},'%')
+    <if test="typeId != null">
+        AND `machine`.type_id = #{typeId}
+    </if>
+      <if test="workId != null">
+          AND  `machine`.work_id = #{workId}
+      </if>
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -60,6 +68,13 @@
     from machine
     where m_id = #{mId,jdbcType=INTEGER}
   </select>
+
+   <select id="selectMachineName" resultMap="BaseResultMap">
+       select
+       <include refid="Base_Column_List" />
+       from machine
+       where m_name = #{mName}
+   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from machine
@@ -94,6 +109,12 @@
       <if test="isDelete != null">
         is_delete,
       </if>
+        <if test="createDate != null">
+            create_date,
+        </if>
+        <if test="updateDate != null">
+            update_date
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="mName != null">
@@ -114,6 +135,12 @@
       <if test="isDelete != null">
         #{isDelete,jdbcType=INTEGER},
       </if>
+        <if test="createDate != null">
+            #{createDate},
+        </if>
+        <if test="updateDate != null">
+            #{updateDate}
+        </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.isms.ismsbackend.entity.Machine">
@@ -137,6 +164,9 @@
       <if test="isDelete != null">
         is_delete = #{isDelete,jdbcType=INTEGER},
       </if>
+        <if test="updateDate != null">
+            update_date = #{updateDate},
+        </if>
     </set>
     where m_id = #{mId,jdbcType=INTEGER}
   </update>
@@ -148,6 +178,13 @@
       work_id = #{workId,jdbcType=INTEGER},
       type_id = #{typeId,jdbcType=INTEGER},
       is_delete = #{isDelete,jdbcType=INTEGER}
+    where m_id = #{mId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateMachine" parameterType="com.isms.ismsbackend.entity.Machine">
+        update machine
+    set
+      is_delete = 1
     where m_id = #{mId,jdbcType=INTEGER}
   </update>
 </mapper>
