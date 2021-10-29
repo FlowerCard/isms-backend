@@ -50,9 +50,9 @@
     where work_id = #{workId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="work_id" keyProperty="workId" parameterType="com.isms.ismsbackend.entity.Worksite" useGeneratedKeys="true">
-    insert into worksite (work_name, work_addr, city_id, u_id, create_time, is_delete)
+    insert into worksite (work_name, work_addr, city_id, u_id, create_time, update_time, is_delete)
     values (#{workName,jdbcType=VARCHAR}, #{workAddr,jdbcType=VARCHAR}, #{cityId,jdbcType=INTEGER}, 
-      #{uId,jdbcType=INTEGER}, #{createTime,jdbcType=DATE}, #{isDelete,jdbcType=INTEGER})
+      #{uId,jdbcType=INTEGER}, #{createTime,jdbcType=DATE}, #{updateTime,jdbcType=DATE},, #{isDelete,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" keyColumn="work_id" keyProperty="workId" parameterType="com.isms.ismsbackend.entity.Worksite" useGeneratedKeys="true">
     insert into worksite
@@ -71,6 +71,9 @@
       </if>
       <if test="createTime != null">
         create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
       </if>
       <if test="isDelete != null">
         is_delete,
@@ -91,6 +94,9 @@
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="isDelete != null">
         #{isDelete,jdbcType=INTEGER},
@@ -115,6 +121,9 @@
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=DATE},
       </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="isDelete != null">
         is_delete = #{isDelete,jdbcType=INTEGER},
       </if>
@@ -128,6 +137,7 @@
       city_id = #{cityId,jdbcType=INTEGER},
       u_id = #{uId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=DATE},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=INTEGER}
     where work_id = #{workId,jdbcType=INTEGER}
   </update>
