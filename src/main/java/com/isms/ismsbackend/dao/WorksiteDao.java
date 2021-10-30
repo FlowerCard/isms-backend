@@ -28,9 +28,21 @@ public interface WorksiteDao {
     int insertSelective(Worksite record);
 
     Worksite selectByPrimaryKey(Integer workId);
-    
+
+    /**
+     * 根据用户ID查询
+     * @param uid 用户id
+     * @return 对象结果集
+     */
     List<Worksite> selectByUId(Integer uid);
 
+    /**
+     * 模糊搜索
+     * @param uid       用户id
+     * @param workName  工地名称
+     * @param cityId    地区id
+     * @return 对象结果集
+     */
     List<Worksite> selectBySearch(@Param("u_id") Integer uid,@Param("work_name") String workName, @Param("city_id") Integer cityId);
     
     Worksite selectByWorkName(String username);
