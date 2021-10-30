@@ -40,7 +40,7 @@ public interface MachineTypeService {
     Integer modifyMachineType(MachineType machineType);
 
     /**
-     * 连表查询typeId
+     * 根据id查询设备类型名称
      * @param typeId
      * @return
      */

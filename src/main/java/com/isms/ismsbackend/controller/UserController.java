@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
 @CrossOrigin
-@Api(tags = "UserController",value = "提供了增删改查的handler，使用Restful风格发起访问")
+@Api(tags = "用户管理控制器",value = "提供了增删改查的handler，使用Restful风格发起访问")
 public class UserController {
 
     @Autowired
