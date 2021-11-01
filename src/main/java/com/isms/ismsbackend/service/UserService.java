@@ -20,7 +20,7 @@ public interface UserService {
      * 查询所有并分页
      * @return
      */
-    PageInfo findAll(Integer page, Integer limit);
+    PageInfo findAll(Integer page, Integer limit,String fuzzy,Integer isAdmin);
 
     /**
      * 根据id查询用户

@@ -44,6 +44,12 @@ public interface WorksiteDao {
      * @return 对象结果集
      */
     List<Worksite> selectBySearch(@Param("u_id") Integer uid,@Param("work_name") String workName, @Param("city_id") Integer cityId);
+
+    /**
+     * 查询所有工地名称
+     * @return
+     */
+    List<Worksite> selectAll();
     
     Worksite selectByWorkName(String username);
 
