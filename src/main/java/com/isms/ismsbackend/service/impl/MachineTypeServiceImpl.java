@@ -75,9 +75,20 @@ public class MachineTypeServiceImpl implements MachineTypeService {
      * @return MachineType
      */
     @Override
-    public MachineType findByTypeId(Integer typeId) {
-        MachineType machineType = machineTypeDao.selectByTypeId(typeId);
+    public List<MachineType> findByTypeId(Integer typeId) {
+        List<MachineType> machineType = machineTypeDao.selectByTypeId(typeId);
         return machineType;
+    }
+
+    /**
+     * 查询设备类型是否在设备中引用
+     * @param typeId 设备类型id
+     * @return 集合数据
+     */
+    @Override
+    public List<MachineType> findMachineByMachineTypeId(Integer typeId) {
+        List<MachineType> machineTypes = machineTypeDao.selectMachineByMachineTypeId(typeId);
+        return machineTypes;
     }
 
     /**
@@ -87,9 +98,9 @@ public class MachineTypeServiceImpl implements MachineTypeService {
      */
     @Override
     public Integer updateMachineType(Integer typeId) {
-        MachineType machineType = machineTypeDao.selectByTypeId(typeId);
+        List<MachineType> machineTypes = machineTypeDao.selectMachineByMachineTypeId(typeId);
         //查到相关数据 执行返回0 逻辑删除失败
-        if (machineType != null) {
+        if (machineTypes.size() > 0 ) {
             return 0;
         }
         return machineTypeDao.updateMachineType(typeId);

@@ -40,7 +40,7 @@ public interface MachineTypeDao {
      * @param typeId 设备类型id
      * @return MachineType
      */
-    MachineType selectByTypeId(Integer typeId);
+    List<MachineType> selectByTypeId(Integer typeId);
 
     /**
      * 逻辑删除
@@ -48,6 +48,12 @@ public interface MachineTypeDao {
      * @return
      */
     Integer updateMachineType(Integer typeId);
+
+    /**
+     * 查询设备类型是否在设备中引用
+     */
+
+    List<MachineType> selectMachineByMachineTypeId(Integer typeId);
 
     int updateByPrimaryKeySelective(MachineType record);
 
