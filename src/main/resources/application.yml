@@ -1,7 +1,7 @@
 spring:
   datasource:
-    username: huapai
-    password: huapaiPwd3.
+    username: lzj
+    password: Lzj12345678.
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://10.31.161.50:3306/ISMS
     type: com.alibaba.druid.pool.DruidDataSource
@@ -9,3 +9,6 @@ spring:
 logging:
   level: 
     com.isms.ismsbackend.dao: debug
+
+server:
+  port: 8081

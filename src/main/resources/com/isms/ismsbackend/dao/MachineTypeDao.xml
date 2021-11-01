@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.isms.ismsbackend.dao.MachineTypeDao">
+  <resultMap id="BaseResultMap" type="com.isms.ismsbackend.entity.MachineType">
+    <id column="type_id" jdbcType="INTEGER" property="typeId" />
+    <result column="type_name" jdbcType="VARCHAR" property="typeName" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+
+    <association property="machine" javaType="com.isms.ismsbackend.entity.Machine">
+      <id column="m_id" jdbcType="INTEGER" property="mId" />
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    type_id, type_name, is_delete
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from machine_type
+    where type_id = #{typeId,jdbcType=INTEGER}
+    AND is_delete = 0
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from machine_type
+    where is_delete = 0
+    <if test="typeId != null">
+      AND type_id = #{typeId}
+    </if>
+  </select>
+
+  <select id="selectAlls" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from machine_type
+    where is_delete = 0
+  </select>
+
+  <select id="existsName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from machine_type
+    where type_name = #{typeName}
+  </select>
+
+  <select id="selectByTypeId" resultMap="BaseResultMap">
+    SELECT `machine_type`.`type_name` FROM `machine_type`,`machine`
+    WHERE
+    `machine_type`.`type_id` = `machine`.`type_id`
+    AND
+    `machine_type`.`type_id`=#{typeId}
+  </select>
+
+  <select id="selectMachineByMachineTypeId" resultMap="BaseResultMap">
+        SELECT `machine`.m_id FROM `machine_type`,`machine`
+    WHERE
+    `machine_type`.`type_id` = `machine`.`type_id`
+    AND
+    `machine_type`.`type_id`=#{typeId}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from machine_type
+    where type_id = #{typeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="type_id" keyProperty="typeId" parameterType="com.isms.ismsbackend.entity.MachineType" useGeneratedKeys="true">
+    insert into machine_type (type_name, is_delete)
+    values (#{typeName,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="type_id" keyProperty="typeId" parameterType="com.isms.ismsbackend.entity.MachineType" useGeneratedKeys="true">
+    insert into machine_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="typeName != null">
+        type_name,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="typeName != null">
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.isms.ismsbackend.entity.MachineType">
+    update machine_type
+    <set>
+      <if test="typeName != null">
+        type_name = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+    </set>
+    where type_id = #{typeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.isms.ismsbackend.entity.MachineType">
+    update machine_type
+    set type_name = #{typeName,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=INTEGER}
+    where type_id = #{typeId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateMachineType" parameterType="com.isms.ismsbackend.entity.MachineType">
+        update machine_type
+    set
+      is_delete = 1
+    where type_id = #{typeId,jdbcType=INTEGER}
+  </update>
+</mapper>
