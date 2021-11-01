@@ -16,7 +16,7 @@ public interface MachineTypeService {
      * 查询所有并分页
      * @return
      */
-    PageInfo findAll(Integer page,Integer limit);
+    PageInfo findAll(Integer page,Integer limit,Integer typeId);
 
     /**
      * 根据id查询
@@ -40,7 +40,7 @@ public interface MachineTypeService {
     Integer modifyMachineType(MachineType machineType);
 
     /**
-     * 连表查询typeId
+     * 根据id查询设备类型名称
      * @param typeId
      * @return
      */

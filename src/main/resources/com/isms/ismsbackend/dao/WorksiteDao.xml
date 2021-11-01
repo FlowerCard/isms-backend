@@ -45,6 +45,13 @@
     from worksite
     where work_name = #{workName,jdbcType=VARCHAR} and is_delete != 1
   </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from worksite
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from worksite
     where work_id = #{workId,jdbcType=INTEGER}

@@ -22,6 +22,12 @@ public interface WorksiteDao {
     Worksite selectByPrimaryKey(Integer workId);
     
     List<Worksite> selectByUId(Integer uid);
+
+    /**
+     * 查询所有工地名称
+     * @return
+     */
+    List<Worksite> selectAll();
     
     Worksite selectByWorkName(String username);
 

@@ -69,7 +69,7 @@ class IsmsBackendApplicationTests {
 
     @Test
     public void Machine(){
-         machineDao.selectAll(2).forEach(System.out::println);
+        // machineDao.selectAll(2).forEach(System.out::println);
 
     }
 

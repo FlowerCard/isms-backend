@@ -14,12 +14,24 @@
     <include refid="Base_Column_List" />
     from machine_type
     where type_id = #{typeId,jdbcType=INTEGER}
+    AND is_delete = 0
   </select>
 
   <select id="selectAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from machine_type
+    where is_delete = 0
+    <if test="typeId != null">
+      AND type_id = #{typeId}
+    </if>
+  </select>
+
+  <select id="selectAlls" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from machine_type
+    where is_delete = 0
   </select>
 
   <select id="existsName" resultMap="BaseResultMap">
