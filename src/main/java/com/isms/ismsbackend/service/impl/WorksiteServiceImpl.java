@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.isms.ismsbackend.constant.MessageConstant;
 import com.isms.ismsbackend.constant.ResponseCode;
+import com.isms.ismsbackend.dao.MachineDao;
 import com.isms.ismsbackend.dao.WorksiteDao;
 import com.isms.ismsbackend.entity.ResultVO;
 import com.isms.ismsbackend.entity.Worksite;
@@ -26,18 +27,23 @@ public class WorksiteServiceImpl implements WorksiteService {
     @Autowired
     private WorksiteDao worksiteDao;
     
-    private ResultVO resultVO = null;
+    @Autowired
+    private MachineDao machineDao;
     
+    private ResultVO resultVO = null;
+
     /**
      * 根据用户ID分页查询
-     *
+     * 
      * @param page  当前页
      * @param limit 页大小
      * @param uid   用户ID
-     * @return 封装的返回数据
+     * @param workName 工地名称
+     * @param cityId 工地ID
+     * @return  封装的返回数据
      */
     @Override
-    public ResultVO queryAll(Integer uid, Integer page, Integer limit) {
+    public ResultVO queryAll(Integer uid, Integer page, Integer limit, String workName, Integer cityId) {
         resultVO = new ResultVO();
         
         if (page == 0) {
@@ -49,7 +55,7 @@ public class WorksiteServiceImpl implements WorksiteService {
         }
 
         PageHelper.startPage(page,limit);
-        List<Worksite> worksites = worksiteDao.selectByUId(uid);
+        List<Worksite> worksites = worksiteDao.selectBySearch(uid, workName, cityId);
         if (worksites.size() == 0) {
             resultVO.setCode(ResponseCode.FAIL);
             resultVO.setMessage(MessageConstant.QUERY_FAIL);
@@ -143,6 +149,37 @@ public class WorksiteServiceImpl implements WorksiteService {
         
         resultVO.setCode(ResponseCode.SUCCESS);
         resultVO.setMessage(MessageConstant.UPDATE_SUCCESS);
+        resultVO.setData(true);
+        return resultVO;
+    }
+
+    /**
+     * 删除工地
+     *
+     * @param workId 工地ID
+     * @return 封装的返回数据
+     */
+    @Override
+    public ResultVO removeWorksite(Integer workId) {
+        resultVO = new ResultVO();
+        // 查询被删除的工地下是否有设备
+        int count = machineDao.selectByWorkId(workId);
+        if (count != 0) {
+            resultVO.setCode(ResponseCode.FAIL);
+            resultVO.setMessage(MessageConstant.DELETE_FAIL);
+            resultVO.setData(false);
+            return resultVO;
+        }
+        // 没有设备执行逻辑删除
+        int row = worksiteDao.setDelete(workId);
+        if (row == 0) {
+            resultVO.setCode(ResponseCode.FAIL);
+            resultVO.setMessage(MessageConstant.DELETE_FAIL);
+            resultVO.setData(false);
+            return resultVO;
+        }
+        resultVO.setCode(ResponseCode.SUCCESS);
+        resultVO.setMessage(MessageConstant.DELETE_SUCCESS);
         resultVO.setData(true);
         return resultVO;
     }

@@ -15,9 +15,11 @@ public interface CityService {
      * 查询所有地区
      * @param page  当前页
      * @param limit 页大小
+     * @param searchName 地区名称
+     * @param cityId 地区ID
      * @return 封装的分页数据
      */
-    public ResultVO queryAllCities(Integer page, Integer limit);
+    public ResultVO queryAllCities(Integer page, Integer limit, String searchName, Integer cityId);
 
     /**
      * 不分页查询所有地区

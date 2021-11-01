@@ -19,6 +19,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * Swagger配置类
  */
 @Configuration
+@EnableSwagger2
+@EnableSwaggerBootstrapUI
 public class SwaggerConfig {
     
     @Bean
@@ -34,6 +36,7 @@ public class SwaggerConfig {
         ApiInfo apiInfo = apiInfoBuilder.build();
 
         return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("ISMS")
                 .apiInfo(apiInfo)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.isms.ismsbackend.controller"))

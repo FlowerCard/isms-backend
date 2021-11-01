@@ -41,6 +41,13 @@ public interface MachineDao {
      */
     int updateMachine(Integer mId);
 
+    /**
+     * 根据工地ID查询设备数量
+     * @param workId 工地id
+     * @return 设备数量
+     */
+    int selectByWorkId(Integer workId);
+
     int updateByPrimaryKeySelective(Machine record);
 
     int updateByPrimaryKey(Machine record);

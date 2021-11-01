@@ -42,7 +42,7 @@ class IsmsBackendApplicationTests {
     @Test
     void getCity(){
 //        cityDao.selectAll().forEach(System.out::println);
-        ResultVO resultVO = cityService.queryAllCities(1,5);
+        ResultVO resultVO = cityService.queryAllCities(1,5,"",1);
         PageInfo data = (PageInfo) resultVO.getData();
         System.out.println(data);
         data.getList().forEach(System.out::println);
@@ -71,6 +71,27 @@ class IsmsBackendApplicationTests {
     public void Machine(){
         // machineDao.selectAll(2).forEach(System.out::println);
 
+    }
+    
+    @Test
+    void getMachineByWorkId() {
+        System.out.println(machineDao.selectByWorkId(7));
+    }
+    
+    @Test
+    void selectBySearch() {
+        PageHelper.startPage(1,10);
+        List<Worksite> worksiteList = worksiteDao.selectBySearch(2, "", 2);
+        PageInfo pageInfo = new PageInfo(worksiteList);
+        System.out.println("pageInfo = " + pageInfo);
+        pageInfo.getList().forEach(System.out::println);
+    }
+    
+    @Test
+    void selectBySearchForCity() {
+        ResultVO resultVO = cityService.queryAllCities(1, 10, "", null);
+        PageInfo data = (PageInfo) resultVO.getData();
+        data.getList().forEach(System.out::println);
     }
 
 }

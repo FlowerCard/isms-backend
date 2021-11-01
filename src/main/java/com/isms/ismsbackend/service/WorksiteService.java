@@ -16,9 +16,11 @@ public interface WorksiteService {
      * @param page  当前页
      * @param limit 页大小
      * @param uid   用户ID
+     * @param workName 工地名称
+     * @param cityId 工地ID
      * @return  封装的返回数据
      */
-    public ResultVO queryAll(Integer uid, Integer page, Integer limit);
+    public ResultVO queryAll(Integer uid, Integer page, Integer limit, String workName, Integer cityId);
 
     /**
      * 根据工地ID查询
@@ -47,5 +49,12 @@ public interface WorksiteService {
      * @return 封装的返回数据
      */
     public ResultVO modifyWorksite(Worksite worksite);
+
+    /**
+     * 删除工地
+     * @param workId 工地ID
+     * @return 封装的返回数据
+     */
+    public ResultVO removeWorksite(Integer workId);
     
 }

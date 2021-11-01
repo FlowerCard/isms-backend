@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.isms.ismsbackend.constant.MessageConstant;
 import com.isms.ismsbackend.constant.ResponseCode;
 import com.isms.ismsbackend.dao.CityDao;
+import com.isms.ismsbackend.dao.WorksiteDao;
 import com.isms.ismsbackend.entity.City;
 import com.isms.ismsbackend.entity.ResultVO;
 import com.isms.ismsbackend.service.CityService;
@@ -27,29 +28,34 @@ public class CityServiceImpl implements CityService {
     @Autowired
     private CityDao cityDao;
     
+    @Autowired
+    private WorksiteDao worksiteDao;
+    
     private ResultVO resultVO = null;
 
     /**
      * 查询所有地区
      * @param page  当前页
      * @param limit 页大小
+     * @param searchName 地区名称
+     * @param cityId 地区ID
      * @return 封装的分页数据
      */
     @Override
-    public ResultVO queryAllCities(Integer page, Integer limit) {
+    public ResultVO queryAllCities(Integer page, Integer limit, String searchName, Integer cityId) {
         // 判断传入的分页数据是否合理
-        if (page == 0 || page == null) {
+        if (page == 0) {
             page = 1;
         }
 
-        if (limit == 0 || limit == null) {
+        if (limit == 0) {
             limit = 10;
         }
         
         resultVO = new ResultVO();
         // 开启分页
         PageHelper.startPage(page,limit);
-        List<City> queryCities = cityDao.selectAll();
+        List<City> queryCities = cityDao.selectAll(searchName, cityId);
         
         // 如果数据为空则返回 null
         if (queryCities.size() == 0) {
@@ -76,7 +82,7 @@ public class CityServiceImpl implements CityService {
     @Override
     public ResultVO queryAllCities() {
         resultVO = new ResultVO();
-        List<City> cities = cityDao.selectAll();
+        List<City> cities = cityDao.selectAll("",null);
         if (cities.size() == 0) {
             resultVO.setCode(ResponseCode.FAIL);
             resultVO.setMessage(MessageConstant.QUERY_FAIL);
@@ -190,6 +196,11 @@ public class CityServiceImpl implements CityService {
      */
     @Override
     public Boolean removeCity(Integer cityId) {
+        // 查询被删除地区下有多少工地
+        int count = worksiteDao.selectByCityId(cityId);
+        if (count != 0) {
+            return false;
+        }
         int row = cityDao.setDelete(cityId);
         return row != 0;
     }
