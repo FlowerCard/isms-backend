@@ -25,8 +25,8 @@
     from user
     where is_delete = 0
     AND username  LIKE concat('%',#{fuzzy},'%')
-    <if test="uid != null">
-      AND u_id = #{uid,jdbcType=INTEGER}
+    <if test="isAdmin != null">
+      AND is_admin = #{isAdmin,jdbcType=INTEGER}
     </if>
 
   </select>

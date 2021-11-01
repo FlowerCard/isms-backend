@@ -19,10 +19,10 @@ public interface UserDao {
     /**
      * 根据条件查询所有
      * @param fuzzy 输入框的值
-     * @param uid 用户id
+     * @param isAdmin 用户身份id
      * @return user集合
      */
-    List<User> selectAll(@Param("fuzzy") String fuzzy, @Param("uid") Integer uid);
+    List<User> selectAll(@Param("fuzzy") String fuzzy, @Param("isAdmin") Integer isAdmin);
 
     /**
      * 校验用户名

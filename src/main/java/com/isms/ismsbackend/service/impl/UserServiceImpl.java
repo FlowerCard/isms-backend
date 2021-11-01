@@ -44,14 +44,14 @@ public class UserServiceImpl implements UserService {
      * @param page 当前页数
      * @param limit 每页数据条数
      * @param fuzzy 输入框参数
-     * @param uid 用户身份id
+     * @param isAdmin 用户身份id
      * @return 封装过的分页信息
      */
     @Override
-    public PageInfo findAll(Integer page, Integer limit,String fuzzy,Integer uid) {
+    public PageInfo findAll(Integer page, Integer limit,String fuzzy,Integer isAdmin) {
         //设置分页
         PageHelper.startPage(page,limit);
-        List<User> userList = userDao.selectAll(fuzzy,uid);
+        List<User> userList = userDao.selectAll(fuzzy,isAdmin);
         //设置分页分装数据
         PageInfo<User> userPageInfo = new PageInfo<>(userList);
         return userPageInfo;

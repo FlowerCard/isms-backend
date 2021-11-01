@@ -57,7 +57,7 @@ public class UserController {
      * @param page 当前页
      * @param limit 每页条数
      * @param fuzzy 输入框参数
-     * @param uid 用户id
+     * @param isAdmins 用户id
      * @return 封装的分页信息
      */
     @GetMapping("/findAll/{page}/{limit}")
@@ -66,11 +66,11 @@ public class UserController {
             @ApiImplicitParam(name = "page",dataType = "int",value = "当前页",example = "1",required = true),
             @ApiImplicitParam(name = "limit",dataType = "int",value = "每页条数",example = "10",required = true),
             @ApiImplicitParam(name = "fuzzy",dataType = "string",value = "输入框参数",example = "admin",required = true),
-            @ApiImplicitParam(name = "uid",dataType = "int",value = "用户id",example = "2",required = true)
+            @ApiImplicitParam(name = "isAdmin",dataType = "int",value = "用户身份编号",example = "2",required = true)
     })
     public ResultVO getUserList(@PathVariable Integer page, @PathVariable Integer limit,
-                                String fuzzy,Integer uid){
-        PageInfo pageInfo = userService.findAll(page, limit,fuzzy,uid);
+                                String fuzzy,Integer isAdmin){
+        PageInfo pageInfo = userService.findAll(page, limit,fuzzy,isAdmin);
         resultVO = new ResultVO();
         resultVO.setCode(ResponseCode.SUCCESS);
         resultVO.setMessage(MessageConstant.QUERY_SUCCESS);
