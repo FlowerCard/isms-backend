@@ -43,6 +43,7 @@
     <include refid="Base_Column_List" />
     from machine_type
     where type_name = #{typeName}
+    and is_delete = 0
   </select>
 
   <select id="selectByTypeId" resultMap="BaseResultMap">

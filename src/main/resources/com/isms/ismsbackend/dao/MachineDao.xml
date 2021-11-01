@@ -78,6 +78,7 @@
        <include refid="Base_Column_List" />
        from machine
        where m_name = #{mName}
+       and is_delete = 0
    </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
