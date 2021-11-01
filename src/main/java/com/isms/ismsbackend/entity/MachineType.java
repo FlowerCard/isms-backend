@@ -32,7 +32,8 @@ public class MachineType implements Serializable {
     @ApiModelProperty(value = "是否删除   0：未删除   1：已删除")
     private Integer isDelete;
 
-
+    @ApiModelProperty(value = "设备实体类")
+    private Machine machine;
 
     private static final long serialVersionUID = 1L;
 }

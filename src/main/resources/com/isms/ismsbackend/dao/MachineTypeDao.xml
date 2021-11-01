@@ -5,6 +5,10 @@
     <id column="type_id" jdbcType="INTEGER" property="typeId" />
     <result column="type_name" jdbcType="VARCHAR" property="typeName" />
     <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+
+    <association property="machine" javaType="com.isms.ismsbackend.entity.Machine">
+      <id column="m_id" jdbcType="INTEGER" property="mId" />
+    </association>
   </resultMap>
   <sql id="Base_Column_List">
     type_id, type_name, is_delete
@@ -43,6 +47,14 @@
 
   <select id="selectByTypeId" resultMap="BaseResultMap">
     SELECT `machine_type`.`type_name` FROM `machine_type`,`machine`
+    WHERE
+    `machine_type`.`type_id` = `machine`.`type_id`
+    AND
+    `machine_type`.`type_id`=#{typeId}
+  </select>
+
+  <select id="selectMachineByMachineTypeId" resultMap="BaseResultMap">
+        SELECT `machine`.m_id FROM `machine_type`,`machine`
     WHERE
     `machine_type`.`type_id` = `machine`.`type_id`
     AND

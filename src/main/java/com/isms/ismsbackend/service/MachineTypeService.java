@@ -44,7 +44,14 @@ public interface MachineTypeService {
      * @param typeId
      * @return
      */
-    MachineType findByTypeId(Integer typeId);
+    List<MachineType> findByTypeId(Integer typeId);
+
+    /**
+     * 查询设备类型是否在设备中引用
+     * @param typeId 设备类型id
+     * @return 集合数据
+     */
+    List<MachineType> findMachineByMachineTypeId(Integer typeId);
 
     /**
      * 逻辑删除

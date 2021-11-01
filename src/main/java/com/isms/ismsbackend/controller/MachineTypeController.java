@@ -13,6 +13,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @Author lzj
  * @Date 2021/10/28
@@ -141,7 +143,7 @@ public class MachineTypeController {
     @ApiOperation(value = "根据id查询设备类型名称",notes ="返回一个machineType对象" )
     @ApiImplicitParam(name = "typeId",dataType = "int",value = "设备类型id",example = "2",required = true)
     public ResultVO getTypeNameByTypeId(@PathVariable Integer typeId){
-        MachineType machineType = machineTypeService.findByTypeId(typeId);
+        List<MachineType> machineType = machineTypeService.findByTypeId(typeId);
         resultVO.setCode(ResponseCode.SUCCESS);
         resultVO.setData(machineType);
         return resultVO;
