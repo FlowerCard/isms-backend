@@ -34,6 +34,18 @@ public class User implements Serializable {
     private String password;
 
     /**
+     * 邮箱
+     */
+    @ApiModelProperty(value = "邮箱")
+    private String email;
+
+    /**
+     * 手机号
+     */
+    @ApiModelProperty(value = "手机号")
+    private String phone;
+
+    /**
      * 身份 0:员工 1:管理员
      */
     @ApiModelProperty(value = "身份 0:员工 1:管理员")

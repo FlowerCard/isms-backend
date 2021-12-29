@@ -5,11 +5,13 @@
     <id column="u_id" jdbcType="INTEGER" property="uId" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="CHAR" property="phone" />
     <result column="is_admin" jdbcType="INTEGER" property="isAdmin" />
     <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
   </resultMap>
   <sql id="Base_Column_List">
-    u_id, username, `password`, is_admin, is_delete
+    u_id, username, `password`, email, phone, is_admin, is_delete
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -43,10 +45,12 @@
     where u_id = #{uId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="u_id" keyProperty="uId" parameterType="com.isms.ismsbackend.entity.User" useGeneratedKeys="true">
-    insert into user (username, `password`, is_admin, 
-      is_delete)
-    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{isAdmin,jdbcType=INTEGER}, 
-      #{isDelete,jdbcType=INTEGER})
+    insert into user (username, `password`, email,
+                      phone, is_admin, is_delete
+    )
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+            #{phone,jdbcType=CHAR}, #{isAdmin,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER}
+           )
   </insert>
   <insert id="insertSelective" keyColumn="u_id" keyProperty="uId" parameterType="com.isms.ismsbackend.entity.User" useGeneratedKeys="true">
     insert into user
@@ -56,6 +60,12 @@
       </if>
       <if test="password != null">
         `password`,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="phone != null">
+        phone,
       </if>
       <if test="isAdmin != null">
         is_admin,
@@ -71,6 +81,12 @@
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
       </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=CHAR},
+      </if>
       <if test="isAdmin != null">
         #{isAdmin,jdbcType=INTEGER},
       </if>
@@ -79,6 +95,12 @@
       </if>
     </trim>
   </insert>
+  <update id="updateUser" parameterType="com.isms.ismsbackend.entity.User">
+    update user
+    set
+      is_delete = 1
+    where u_id = #{uId,jdbcType=INTEGER}
+  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.isms.ismsbackend.entity.User">
     update user
     <set>
@@ -87,6 +109,12 @@
       </if>
       <if test="password != null">
         `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=CHAR},
       </if>
       <if test="isAdmin != null">
         is_admin = #{isAdmin,jdbcType=INTEGER},
@@ -100,16 +128,11 @@
   <update id="updateByPrimaryKey" parameterType="com.isms.ismsbackend.entity.User">
     update user
     set username = #{username,jdbcType=VARCHAR},
-      `password` = #{password,jdbcType=VARCHAR},
-      is_admin = #{isAdmin,jdbcType=INTEGER},
-      is_delete = #{isDelete,jdbcType=INTEGER}
-    where u_id = #{uId,jdbcType=INTEGER}
-  </update>
-
-  <update id="updateUser" parameterType="com.isms.ismsbackend.entity.User">
-      update user
-    set
-      is_delete = 1
+        `password` = #{password,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=CHAR},
+        is_admin = #{isAdmin,jdbcType=INTEGER},
+        is_delete = #{isDelete,jdbcType=INTEGER}
     where u_id = #{uId,jdbcType=INTEGER}
   </update>
 </mapper>

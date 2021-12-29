@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v12.4.3 (64 bit)
-MySQL - 5.7.36 : Database - ISMS
+MySQL - 5.7.25-log : Database - isms
 *********************************************************************
 */
 
@@ -12,9 +12,9 @@ MySQL - 5.7.36 : Database - ISMS
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`ISMS` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`isms` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
-USE `ISMS`;
+USE `isms`;
 
 /*Table structure for table `city` */
 
@@ -122,6 +122,8 @@ CREATE TABLE `user` (
   `u_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户id',
   `username` varchar(255) DEFAULT NULL COMMENT '用户名',
   `password` varchar(255) DEFAULT NULL COMMENT '密码',
+  `email` varchar(255) DEFAULT 'null' COMMENT '邮箱',
+  `phone` char(20) DEFAULT 'null' COMMENT '手机号',
   `is_admin` int(11) DEFAULT '1' COMMENT '身份 0:员工 1:管理员',
   `is_delete` int(11) DEFAULT '0' COMMENT '用户状态 0:未删除  1:已删除',
   PRIMARY KEY (`u_id`)
@@ -129,20 +131,20 @@ CREATE TABLE `user` (
 
 /*Data for the table `user` */
 
-insert  into `user`(`u_id`,`username`,`password`,`is_admin`,`is_delete`) values 
-(2,'admin','admin',1,0),
-(3,'admin1','admin1',1,0),
-(4,'test','123',1,0),
-(5,'test1','test1',0,0),
-(6,'test3','123',0,0),
-(8,'test5','123',0,0),
-(9,'test6','123',0,0),
-(10,'test7','1234',0,0),
-(11,'test8','123',0,1),
-(12,'test9','123456',0,1),
-(13,'test8','123',1,0),
-(14,'test9','123',0,0),
-(15,'1111','1111',0,0);
+insert  into `user`(`u_id`,`username`,`password`,`email`,`phone`,`is_admin`,`is_delete`) values 
+(2,'admin','admin','null','null',1,0),
+(3,'admin1','admin1','null','null',1,0),
+(4,'test','123','null','null',1,0),
+(5,'test1','test1','null','null',0,0),
+(6,'test3','123','null','null',0,0),
+(8,'test5','123','null','null',0,0),
+(9,'test6','123','null','null',0,0),
+(10,'test7','1234','null','null',0,0),
+(11,'test8','123','null','null',0,1),
+(12,'test9','123456','null','null',0,1),
+(13,'test8','123','null','null',1,0),
+(14,'test9','123','null','null',0,0),
+(15,'1111','1111','null','null',0,0);
 
 /*Table structure for table `worksite` */
 
