@@ -67,8 +67,8 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page",dataType = "int",value = "当前页",example = "1",required = true),
             @ApiImplicitParam(name = "limit",dataType = "int",value = "每页条数",example = "10",required = true),
-            @ApiImplicitParam(name = "fuzzy",dataType = "string",value = "输入框参数",example = "admin",required = false),
-            @ApiImplicitParam(name = "isAdmin",dataType = "int",value = "是否为管理员",example = "2",required = false)
+            @ApiImplicitParam(name = "fuzzy",dataType = "string",value = "输入框参数",example = "",required = false),
+            @ApiImplicitParam(name = "isAdmin",dataType = "int",value = "是否为管理员",example = "0",required = false)
     })
     public ResultVO getUserList(@PathVariable Integer page, @PathVariable Integer limit,
                                 String fuzzy,Integer isAdmin){
