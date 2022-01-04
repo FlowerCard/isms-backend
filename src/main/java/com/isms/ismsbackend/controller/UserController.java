@@ -10,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
 @CrossOrigin
+@Slf4j
 @Api(tags = "用户管理控制器",value = "提供了增删改查的handler，使用Restful风格发起访问")
 public class UserController {
 
@@ -57,7 +59,7 @@ public class UserController {
      * @param page 当前页
      * @param limit 每页条数
      * @param fuzzy 输入框参数
-     * @param isAdmins 用户id
+     * @param isAdmin 是否为管理员
      * @return 封装的分页信息
      */
     @GetMapping("/findAll/{page}/{limit}")
@@ -65,12 +67,14 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page",dataType = "int",value = "当前页",example = "1",required = true),
             @ApiImplicitParam(name = "limit",dataType = "int",value = "每页条数",example = "10",required = true),
-            @ApiImplicitParam(name = "fuzzy",dataType = "string",value = "输入框参数",example = "admin",required = true),
-            @ApiImplicitParam(name = "isAdmin",dataType = "int",value = "用户身份编号",example = "2",required = true)
+            @ApiImplicitParam(name = "fuzzy",dataType = "string",value = "输入框参数",example = "admin",required = false),
+            @ApiImplicitParam(name = "isAdmin",dataType = "int",value = "是否为管理员",example = "2",required = false)
     })
     public ResultVO getUserList(@PathVariable Integer page, @PathVariable Integer limit,
                                 String fuzzy,Integer isAdmin){
+        log.debug("UserController ==========>>>>> userService.findAll ======>>>> " + userService.findAll(page, limit, fuzzy, isAdmin));
         PageInfo pageInfo = userService.findAll(page, limit,fuzzy,isAdmin);
+        log.info("UserController ==========>>>>> pageInfo ======>>>> " + pageInfo);
         resultVO = new ResultVO();
         resultVO.setCode(ResponseCode.SUCCESS);
         resultVO.setMessage(MessageConstant.QUERY_SUCCESS);

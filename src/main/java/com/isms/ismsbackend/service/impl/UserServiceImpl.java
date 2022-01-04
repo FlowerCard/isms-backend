@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.isms.ismsbackend.dao.UserDao;
 import com.isms.ismsbackend.entity.User;
 import com.isms.ismsbackend.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.util.List;
  */
 @Service
 @Transactional
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -49,9 +51,12 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public PageInfo findAll(Integer page, Integer limit,String fuzzy,Integer isAdmin) {
+        PageHelper.clearPage();
         //设置分页
         PageHelper.startPage(page,limit);
         List<User> userList = userDao.selectAll(fuzzy,isAdmin);
+        log.info("userList ----> " + userList.toString() );
+        log.debug("userList ----> " + userList.toString() );
         //设置分页分装数据
         PageInfo<User> userPageInfo = new PageInfo<>(userList);
         return userPageInfo;
