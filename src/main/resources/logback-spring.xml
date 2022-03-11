@@ -21,7 +21,7 @@
     -->
 
     <!-- 定义日志的输出位置 -->
-    <property name="log.filepath" value=".\\logfile"/>
+    <property name="log.filepath" value="\\logfile"/>
 
     <!-- 日志记录器，日期滚动记录 -->
     <appender name="FILEERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -140,6 +140,9 @@
         <appender-ref ref="STDOUT" />
     </root>
     
+	<!-- 
+		name 的值为 application-XXX的xxx
+	-->
     <springProfile name="testnb,dev">
         <logger name="com.isms.ismsbackend" level="debug" />
         <logger name="org.springframework" level="WARN" />
